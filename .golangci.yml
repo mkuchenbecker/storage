@@ -28,4 +28,3 @@ run:
     - testing/model
   skip-files:
     - main.go
-    - api/wire.pb.go
