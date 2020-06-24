@@ -1,13 +1,28 @@
 package main
 
 import (
+	"context"
+	"log"
+
+	"github.com/kelseyhightower/envconfig"
 	"github.com/mkuchenbecker/storage/service"
 )
 
-const (
-	port = 50051
-)
+// Settings is the setting for the storage service.
+type Settings struct {
+	Port int `envconfig:"PORT" default:"9000"`
+}
+
+func getSettings(prefix string) *Settings {
+	var s Settings
+	err := envconfig.Process(prefix, &s)
+	if err != nil {
+		log.Fatal(context.Background(), err.Error())
+	}
+	return &s
+}
 
 func main() {
-	service.New().Start(port)
+	settings := getSettings("")
+	service.New().Start(settings.Port)
 }

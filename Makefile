@@ -1,21 +1,6 @@
-.PHONY: bootstrap
-bootstrap:
-	go get -u github.com/golangci/golangci-lint/cmd/golangci-lint
-	go get -u github.com/kyoh86/richgo
-	go get -v github.com/ramya-rao-a/go-outline
-	go get -v github.com/mdempsky/gocode
-	go get -v github.com/uudashr/gopkgs/cmd/gopkgs
-	go get -v golang.org/x/tools/cmd/goimports
-	go get -v golang.org/x/tools/cmd/goimports
-
 .PHONY: lint
-lint: fmt
+lint: 
 	golangci-lint run
-
-.PHONY: test-flake
-test-ci:
-	@echo "tests:"
-	richgo test -count=30 -v -cover ./...
 
 .PHONY: install-golang-ci
 lint-ci:
@@ -27,9 +12,15 @@ generate:
 
 .PHONY: integration
 integration:
-	go test -race -cover -tags=integration ./...
+	richgo test -race -cover -tags=integration ./...
 	
+.PHONY: build
+build:
+	docker build -t mkuchenbecker/storage:storage-latest -f service.dockerfile . \
 
+.PHONY: push
+push:
+	docker push mkuchenbecker/storage:storage-latest
 
 .PHONY: fmt
 fmt:
