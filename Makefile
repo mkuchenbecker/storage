@@ -23,7 +23,13 @@ lint-ci:
 
 .PHONY: generate
 generate:
-	protoc --proto_path=. --go_out=. --go_opt=paths=source_relative datamodel.proto
+	protoc --proto_path=./api/ --go_out=plugins=grpc:./api/ --go_opt=paths=source_relative wire.proto  
+
+.PHONY: integration
+integration:
+	go test -race -cover -tags=integration ./...
+	
+
 
 .PHONY: fmt
 fmt:
