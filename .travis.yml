@@ -1,0 +1,14 @@
+language: go
+
+go:
+  - 1.14.x
+
+install:
+  - go get github.com/kyoh86/richgo
+  - go get github.com/mattn/goveralls
+  - go get github.com/golangci/golangci-lint/cmd/golangci-lint
+
+script:
+  - ${GOPATH}/bin/golangci-lint run ./...
+  - richgo test -coverprofile coverage.out -cover -race -tags=integration ./...
+  - ${GOPATH}/bin/goveralls -coverprofile coverage.out -service=travis-ci
