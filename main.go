@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"log"
 
 	"github.com/kelseyhightower/envconfig"
@@ -23,6 +24,7 @@ func getSettings(prefix string) *Settings {
 }
 
 func main() {
+	flag.Parse()
 	settings := getSettings("")
 	service.New().Start(settings.Port)
 }
