@@ -39,7 +39,7 @@ func (s *service) Put(ctx context.Context, req *api.PutRequest) (*api.PutRespons
 }
 
 func (s *service) Get(ctx context.Context, req *api.GetRequest) (*api.GetResponse, error) {
-	glog.Infof("Put Request Recieved: %+v", req)
+	glog.Infof("Get Request Recieved: %+v", req)
 	defer glog.Flush()
 	data, ok := s.data[req.Key.Value]
 	if !ok {
@@ -49,6 +49,8 @@ func (s *service) Get(ctx context.Context, req *api.GetRequest) (*api.GetRespons
 }
 
 func (s *service) Start(port int) error {
+	glog.Infof("Starting Service on Port: %d", port)
+	defer glog.Flush()
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
 	if err != nil {
 		return errors.Wrap(err, "failed to listen")
