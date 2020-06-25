@@ -1,0 +1,16 @@
+type: google.api.Service
+config_version: 3
+name: storage-bvdpb3qesq-uc.a.run.app
+title: Storage APIs
+apis:
+  - name: Storage
+usage:
+  rules:
+  - selector: Storage.Put
+    allow_unregistered_calls: true
+  - selector: Storage.Get
+    allow_unregistered_calls: true
+backend:
+  rules:
+    - selector: "*"
+      address: https://storage-bvdpb3qesq-uc.a.run.app

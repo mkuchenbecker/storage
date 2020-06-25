@@ -19,13 +19,8 @@ type service struct {
 	data map[string]*any.Any
 }
 
-type Storage interface {
-	api.StorageServer
-	Start(port int) error
-}
-
 // New creates a new default api.StorageServer.
-func New() Storage {
+func New() api.StorageServer {
 	return &service{
 		data: make(map[string]*any.Any),
 	}
@@ -48,7 +43,7 @@ func (s *service) Get(ctx context.Context, req *api.GetRequest) (*api.GetRespons
 	return &api.GetResponse{Value: data}, nil
 }
 
-func (s *service) Start(port int) error {
+func StartService(server api.StorageServer, port int) error {
 	glog.Infof("Starting Service on Port: %d", port)
 	defer glog.Flush()
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
@@ -56,6 +51,6 @@ func (s *service) Start(port int) error {
 		return errors.Wrap(err, "failed to listen")
 	}
 	grpcServer := grpc.NewServer()
-	api.RegisterStorageServer(grpcServer, s)
+	api.RegisterStorageServer(grpcServer, server)
 	return grpcServer.Serve(lis)
 }
