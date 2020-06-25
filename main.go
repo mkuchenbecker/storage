@@ -11,7 +11,7 @@ import (
 
 // Settings is the setting for the storage service.
 type Settings struct {
-	Port int `envconfig:"PORT" default:"9000"`
+	Port int `envconfig:"PORT" default:"8080"`
 }
 
 func getSettings(prefix string) *Settings {

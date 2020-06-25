@@ -23,7 +23,5 @@
    - '--platform'
    - 'managed'
    - '--allow-unauthenticated'
-   env:
-   - 'PORT=9000'
  images:
  - 'gcr.io/$PROJECT_ID/storage:$COMMIT_SHA'
