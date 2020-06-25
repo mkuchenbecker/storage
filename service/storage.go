@@ -27,14 +27,14 @@ func New() api.StorageServer {
 }
 
 func (s *service) Put(ctx context.Context, req *api.PutRequest) (*api.PutResponse, error) {
-	glog.Infof("Put Request Recieved: %+v", req)
+	glog.Infof("Put Request Received: %+v", req)
 	defer glog.Flush()
 	s.data[req.Key.Value] = req.Value
 	return &api.PutResponse{}, nil
 }
 
 func (s *service) Get(ctx context.Context, req *api.GetRequest) (*api.GetResponse, error) {
-	glog.Infof("Get Request Recieved: %+v", req)
+	glog.Infof("Get Request Received: %+v", req)
 	defer glog.Flush()
 	data, ok := s.data[req.Key.Value]
 	if !ok {
