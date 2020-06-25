@@ -21,8 +21,8 @@
    - '--region'
    - 'us-central1'
    - '--platform'
-   - --allow-unauthenticated
    - 'managed'
+   - '--allow-unauthenticated'
    env:
    - 'PORT=9000'
  images:
