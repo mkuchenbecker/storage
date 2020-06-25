@@ -21,7 +21,7 @@ type SyncFunc func()
 const port = 50060
 
 func TestService(t *testing.T) {
-	service := New()
+	service := New().(*service)
 	go func() {
 		err := service.Start(port)
 		require.NoError(t, err)
@@ -63,7 +63,7 @@ func TestService(t *testing.T) {
 }
 
 func TestService_Listen_Failure(t *testing.T) {
-	err := New().Start(-1)
+	err := New().(*service).Start(-1)
 	require.Error(t, err)
 	assert.Equal(t,
 		"listen tcp: address -1: invalid port",

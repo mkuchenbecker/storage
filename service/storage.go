@@ -19,7 +19,7 @@ type service struct {
 }
 
 // New creates a new default api.StorageServer.
-func New() *service {
+func New() api.StorageServer {
 	return &service{
 		data: make(map[string]*any.Any),
 	}
@@ -45,6 +45,5 @@ func (s *service) Start(port int) error {
 	}
 	grpcServer := grpc.NewServer()
 	api.RegisterStorageServer(grpcServer, New())
-	grpcServer.Serve(lis)
-	return nil
+	return grpcServer.Serve(lis)
 }
