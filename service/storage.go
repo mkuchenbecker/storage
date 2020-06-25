@@ -56,6 +56,6 @@ func (s *service) Start(port int) error {
 		return errors.Wrap(err, "failed to listen")
 	}
 	grpcServer := grpc.NewServer()
-	api.RegisterStorageServer(grpcServer, New())
+	api.RegisterStorageServer(grpcServer, s)
 	return grpcServer.Serve(lis)
 }
