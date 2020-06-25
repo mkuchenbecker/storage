@@ -16,8 +16,6 @@ import (
 	"google.golang.org/grpc"
 )
 
-type SyncFunc func()
-
 const port = 50060
 
 func TestService(t *testing.T) {
