@@ -18,8 +18,13 @@ type service struct {
 	data map[string]*any.Any
 }
 
+type Storage interface {
+	api.StorageServer
+	Start(port int) error
+}
+
 // New creates a new default api.StorageServer.
-func New() api.StorageServer {
+func New() Storage {
 	return &service{
 		data: make(map[string]*any.Any),
 	}
