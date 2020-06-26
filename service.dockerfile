@@ -19,4 +19,4 @@ COPY --from=base_build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-cert
 COPY --from=base_build /go/bin/service /go/bin/service
 
 ENTRYPOINT ["/go/bin/service"]
-EXPOSE 9000
+EXPOSE 8080

@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"log"
 
 	"github.com/kelseyhightower/envconfig"
@@ -10,7 +11,7 @@ import (
 
 // Settings is the setting for the storage service.
 type Settings struct {
-	Port int `envconfig:"PORT" default:"9000"`
+	Port int `envconfig:"PORT" default:"8080"`
 }
 
 func getSettings(prefix string) *Settings {
@@ -23,6 +24,9 @@ func getSettings(prefix string) *Settings {
 }
 
 func main() {
+	flag.Parse()
 	settings := getSettings("")
-	service.New().Start(settings.Port)
+	storage := service.New()
+
+	service.StartService(storage, settings.Port)
 }
