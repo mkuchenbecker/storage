@@ -6,7 +6,7 @@ import (
 	"log"
 
 	"github.com/kelseyhightower/envconfig"
-	"github.com/mkuchenbecker/storage/service"
+	"github.com/mkuchenbecker/storage/service/storage"
 )
 
 // Settings is the setting for the storage service.
@@ -26,7 +26,7 @@ func getSettings(prefix string) *Settings {
 func main() {
 	flag.Parse()
 	settings := getSettings("")
-	storage := service.New()
+	storageService := storage.New()
 
-	service.StartService(storage, settings.Port)
+	storage.StartService(storageService, settings.Port)
 }

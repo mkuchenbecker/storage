@@ -1,6 +1,6 @@
 //+build integration
 
-package service
+package storage
 
 import (
 	"context"
