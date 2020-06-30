@@ -8,7 +8,13 @@ lint-ci:
 
 .PHONY: generate
 generate:
-	protoc --proto_path=./api/ --go_out=plugins=grpc:./api/ --go_opt=paths=source_relative wire.proto  
+	protoc --proto_path=./api/ \
+	--include_imports \
+    --include_source_info \
+	--go_out=plugins=grpc:./api/ \
+	--go_opt=paths=source_relative \
+    --descriptor_set_out=./api/wire_descriptor.pb \
+	wire.proto  
 
 .PHONY: integration
 integration:

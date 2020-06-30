@@ -1,3 +1,5 @@
+//+build integration
+
 package service
 
 import (
@@ -21,7 +23,7 @@ const port = 50060
 func TestService(t *testing.T) {
 	service := New()
 	go func() {
-		err := service.Start(port)
+		err := StartService(service, port)
 		require.NoError(t, err)
 	}()
 	time.Sleep(1 * time.Second)
@@ -61,7 +63,7 @@ func TestService(t *testing.T) {
 }
 
 func TestService_Listen_Failure(t *testing.T) {
-	err := New().Start(-1)
+	err := StartService(New(), -1)
 	require.Error(t, err)
 	assert.Equal(t,
 		"listen tcp: address -1: invalid port",
