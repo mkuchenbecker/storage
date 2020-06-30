@@ -6,6 +6,6 @@ require (
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
 	github.com/golang/protobuf v1.4.2
 	github.com/kelseyhightower/envconfig v1.4.0
-	github.com/mkuchenbecker/storage v0.1.1
+	github.com/mkuchenbecker/storage v0.1.2
 	google.golang.org/grpc v1.30.0
 )
