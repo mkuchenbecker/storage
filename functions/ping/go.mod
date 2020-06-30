@@ -1,4 +1,4 @@
-module github.com/mkuchenbecker/client/ping
+module github.com/mkuchenbecker/storage/functions/ping
 
 go 1.14
 
