@@ -8,7 +8,7 @@ lint-ci:
 
 .PHONY: generate
 generate:
-	protoc --proto_path=./api/ \
+	protoc --proto_path=api/ \
 	--include_imports \
     --include_source_info \
 	--go_out=plugins=grpc:./api/ \
@@ -18,7 +18,11 @@ generate:
 	protoc --proto_path=./service/datamodel \
 	--go_out=plugins=grpc:./service/datamodel \
 	--go_opt=paths=source_relative \
-	datamodel.proto  
+	datamodel.proto
+	protoc --proto_path=./testing/model \
+	--go_out=plugins=grpc:./testing/model \
+	--go_opt=paths=source_relative \
+	foo.proto
 
 .PHONY: init
 init: generate build
@@ -26,7 +30,7 @@ init: generate build
 
 .PHONY: integration
 integration:
-	richgo test -race -cover -tags=integration ./...
+	richgo test -race -cover -tags=inFtegration ./...
 
 .PHONY: unit
 unit:

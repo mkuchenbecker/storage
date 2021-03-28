@@ -33,32 +33,30 @@ func (c *firestoreClient) Get(ctx context.Context, key string) (*datamodel.Item,
 		Where("key", "==", key).
 		Documents(ctx)
 
-	for {
-		doc, err := iter.Next()
-		if err == iterator.Done {
-			break
-		}
-		if err != nil {
-			return nil, err
-		}
-		keyIface, ok := doc.Data()["key"]
-		if !ok {
-			return nil, errors.New("malformated data (key)")
-		}
-		key, ok := keyIface.(string)
-		if !ok {
-			return nil, fmt.Errorf("key wrong type: %+v", keyIface)
-		}
-
-		valueIface, ok := doc.Data()["value"]
-		if !ok {
-			return nil, errors.New("malformated data (value)")
-		}
-		value, ok := valueIface.(*any.Any)
-		if !ok {
-			return nil, fmt.Errorf("value wrong type: %+v", valueIface)
-		}
-		return &datamodel.Item{Key: key, Value: value}, nil
+	doc, err := iter.Next()
+	if err == iterator.Done {
+		return nil, status.ErrNotFound
 	}
-	return nil, status.ErrNotFound
+	if err != nil {
+		return nil, err
+	}
+	keyIface, ok := doc.Data()["key"]
+	if !ok {
+		return nil, errors.New("malformated data (key)")
+	}
+	toStringKey, ok := keyIface.(string)
+	if !ok {
+		return nil, fmt.Errorf("key wrong type: %+v", keyIface)
+	}
+
+	valueIface, ok := doc.Data()["value"]
+	if !ok {
+		return nil, errors.New("malformated data (value)")
+	}
+	value, ok := valueIface.(*any.Any)
+	if !ok {
+		return nil, fmt.Errorf("value wrong type: %+v", valueIface)
+	}
+	return &datamodel.Item{Key: toStringKey, Value: value}, nil
+
 }

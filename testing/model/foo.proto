@@ -3,7 +3,7 @@ syntax = "proto3";
 //go:generate	protoc --proto_path=. --go_out=plugins=grpc:. --go_opt=paths=source_relative foo.proto 
 package storage.client;
 
-option go_package = "testing.model";
+option go_package = "/testing.model";
 
 message Foo {
     string bar = 1;

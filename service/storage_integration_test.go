@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/golang/protobuf/ptypes"
+	"github.com/golang/protobuf/ptypes" //nolint:staticcheck
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -39,7 +39,7 @@ func TestService(t *testing.T) {
 
 	key := api.Key{Value: "qux"}
 	originalFoo := &testing_model.Foo{Bar: "baz"}
-	any, err := ptypes.MarshalAny(originalFoo)
+	any, err := ptypes.MarshalAny(originalFoo) //nolint:staticcheck
 	require.NoError(t, err)
 
 	_, err = client.Put(
@@ -58,7 +58,7 @@ func TestService(t *testing.T) {
 	require.NoError(t, err)
 
 	foo := &testing_model.Foo{}
-	require.NoError(t, ptypes.UnmarshalAny(response.Value, foo))
+	require.NoError(t, ptypes.UnmarshalAny(response.Value, foo)) //nolint:staticcheck
 	assert.Equal(t, originalFoo.Bar, foo.Bar)
 }
 

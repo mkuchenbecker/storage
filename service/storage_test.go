@@ -7,7 +7,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"github.com/golang/protobuf/ptypes"
+	"github.com/golang/protobuf/ptypes" //nolint:staticcheck
 	"github.com/mkuchenbecker/storage/api"
 	testing_model "github.com/mkuchenbecker/storage/testing/model"
 	"github.com/stretchr/testify/assert"
@@ -20,7 +20,7 @@ func testPutGetSuccess(t *testing.T, backend DataBackend) {
 
 	key := api.Key{Value: "qux"}
 	originalFoo := &testing_model.Foo{Bar: "baz"}
-	any, err := ptypes.MarshalAny(originalFoo)
+	any, err := ptypes.MarshalAny(originalFoo) //nolint:staticcheck
 	require.NoError(t, err)
 
 	_, err = service.Put(
@@ -39,7 +39,7 @@ func testPutGetSuccess(t *testing.T, backend DataBackend) {
 	require.NoError(t, err)
 
 	foo := &testing_model.Foo{}
-	require.NoError(t, ptypes.UnmarshalAny(response.Value, foo))
+	require.NoError(t, ptypes.UnmarshalAny(response.Value, foo)) //nolint:staticcheck
 	assert.Equal(t, originalFoo.Bar, foo.Bar)
 }
 

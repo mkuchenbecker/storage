@@ -10,11 +10,11 @@ import (
 	grpcStatus "google.golang.org/grpc/status"
 
 	"github.com/golang/glog"
-	"github.com/golang/protobuf/ptypes/any"
 	"github.com/mkuchenbecker/storage/api"
 	"github.com/mkuchenbecker/storage/service/datamodel"
 	"github.com/mkuchenbecker/storage/service/status"
 	"github.com/pkg/errors"
+	"google.golang.org/protobuf/types/known/anypb"
 )
 
 type DataBackend interface {
@@ -22,10 +22,10 @@ type DataBackend interface {
 	Get(ctx context.Context, key string) (*datamodel.Item, error)
 }
 
-type mapBackend map[string]*any.Any
+type mapBackend map[string]*anypb.Any
 
 func NewMapBackend() DataBackend {
-	out := make(map[string]*any.Any)
+	out := make(map[string]*anypb.Any)
 	return mapBackend(out)
 }
 
