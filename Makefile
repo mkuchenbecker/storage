@@ -18,7 +18,11 @@ generate:
 	protoc --proto_path=./service/datamodel \
 	--go_out=plugins=grpc:./service/datamodel \
 	--go_opt=paths=source_relative \
-	datamodel.proto  
+	datamodel.proto
+	protoc --proto_path=./testing/model \
+	--go_out=plugins=grpc:./testing/model \
+	--go_opt=paths=source_relative \
+	foo.proto
 
 .PHONY: init
 init: generate build

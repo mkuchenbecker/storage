@@ -7,12 +7,12 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"github.com/golang/protobuf/ptypes"
 	"github.com/mkuchenbecker/storage/api"
 	testing_model "github.com/mkuchenbecker/storage/testing/model"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	_ "google.golang.org/protobuf/testing/protocmp"
+	"google.golang.org/protobuf/types/known/anypb"
 )
 
 func testPutGetSuccess(t *testing.T, backend DataBackend) {
@@ -20,7 +20,7 @@ func testPutGetSuccess(t *testing.T, backend DataBackend) {
 
 	key := api.Key{Value: "qux"}
 	originalFoo := &testing_model.Foo{Bar: "baz"}
-	any, err := ptypes.MarshalAny(originalFoo)
+	any, err := anypb.New(originalFoo)
 	require.NoError(t, err)
 
 	_, err = service.Put(
@@ -38,8 +38,11 @@ func testPutGetSuccess(t *testing.T, backend DataBackend) {
 	)
 	require.NoError(t, err)
 
-	foo := &testing_model.Foo{}
-	require.NoError(t, ptypes.UnmarshalAny(response.Value, foo))
+	fooAny, err := anypb.New(response.Value)
+	require.NoError(t, err)
+	foo := new(testing_model.Foo)
+	err = fooAny.UnmarshalTo(foo)
+	require.NoError(t, err)
 	assert.Equal(t, originalFoo.Bar, foo.Bar)
 }
 
