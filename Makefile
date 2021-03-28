@@ -15,10 +15,22 @@ generate:
 	--go_opt=paths=source_relative \
     --descriptor_set_out=./api/wire_descriptor.pb \
 	wire.proto  
+	protoc --proto_path=./service/datamodel \
+	--go_out=plugins=grpc:./service/datamodel \
+	--go_opt=paths=source_relative \
+	datamodel.proto  
+
+.PHONY: init
+init: generate build
+	echo "Initialized"
 
 .PHONY: integration
 integration:
 	richgo test -race -cover -tags=integration ./...
+
+.PHONY: unit
+unit:
+	richgo test -race -cover ./...
 	
 .PHONY: build
 build:

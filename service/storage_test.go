@@ -15,8 +15,8 @@ import (
 	_ "google.golang.org/protobuf/testing/protocmp"
 )
 
-func TestStorageService_Put_Get_Success(t *testing.T) {
-	service := New()
+func testPutGetSuccess(t *testing.T, backend DataBackend) {
+	service := New(backend)
 
 	key := api.Key{Value: "qux"}
 	originalFoo := &testing_model.Foo{Bar: "baz"}
@@ -43,9 +43,14 @@ func TestStorageService_Put_Get_Success(t *testing.T) {
 	assert.Equal(t, originalFoo.Bar, foo.Bar)
 }
 
-func TestStorageService_Get_NotFound(t *testing.T) {
-	service := New()
+func TestStorageService_Put_Get_Success(t *testing.T) {
+	t.Run("map", func(t *testing.T) {
+		testPutGetSuccess(t, NewMapBackend())
+	})
+}
 
+func testGetNotFound(t *testing.T, backend DataBackend) {
+	service := New(backend)
 	key := api.Key{Value: "qux"}
 
 	_, err := service.Get(
@@ -54,4 +59,10 @@ func TestStorageService_Get_NotFound(t *testing.T) {
 	)
 	require.Error(t, err)
 	assert.Equal(t, codes.NotFound, status.Code(err))
+}
+
+func TestStorageService_Get_NotFound(t *testing.T) {
+	t.Run("map", func(t *testing.T) {
+		testGetNotFound(t, NewMapBackend())
+	})
 }

@@ -26,7 +26,7 @@ func getSettings(prefix string) *Settings {
 func main() {
 	flag.Parse()
 	settings := getSettings("")
-	storage := service.New()
+	storage := service.New(service.NewMapBackend())
 
 	service.StartService(storage, settings.Port)
 }
