@@ -2,8 +2,8 @@ package firestore
 
 import (
 	"context"
-	"fmt"
 	"errors"
+	"fmt"
 
 	"github.com/golang/protobuf/ptypes/any"
 	"github.com/mkuchenbecker/storage/service"
@@ -47,7 +47,7 @@ func (c *firestoreClient) Get(ctx context.Context, key string) (*datamodel.Item,
 		}
 		key, ok := keyIface.(string)
 		if !ok {
-			return nil, fmt.Errorf("key wrong type: %+v", keyIface))
+			return nil, fmt.Errorf("key wrong type: %+v", keyIface)
 		}
 
 		valueIface, ok := doc.Data()["value"]
@@ -56,7 +56,7 @@ func (c *firestoreClient) Get(ctx context.Context, key string) (*datamodel.Item,
 		}
 		value, ok := valueIface.(*any.Any)
 		if !ok {
-			return nil, fmt.Errorf("value wrong type: %+v", valueIface))
+			return nil, fmt.Errorf("value wrong type: %+v", valueIface)
 		}
 		return &datamodel.Item{Key: key, Value: value}, nil
 	}
