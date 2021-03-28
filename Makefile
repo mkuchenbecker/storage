@@ -20,9 +20,17 @@ generate:
 	--go_opt=paths=source_relative \
 	datamodel.proto  
 
+.PHONY: init
+init: generate build
+	echo "Initialized"
+
 .PHONY: integration
 integration:
 	richgo test -race -cover -tags=integration ./...
+
+.PHONY: unit
+unit:
+	richgo test -race -cover ./...
 	
 .PHONY: build
 build:
