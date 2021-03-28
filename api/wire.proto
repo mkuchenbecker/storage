@@ -3,7 +3,7 @@ syntax = "proto3";
 package storage.api;
 import "google/protobuf/any.proto";
 
-option go_package = "api";
+option go_package = "/api";
 
 message Key {
   string value = 1;

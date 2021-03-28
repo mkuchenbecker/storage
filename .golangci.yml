@@ -15,7 +15,6 @@ linters:
     - staticcheck
     - structcheck
     - unconvert
-    - unused
 issues:
   max-per-linter: 0
   max-same-issues: 0
@@ -28,3 +27,6 @@ run:
     - testing/model
   skip-files:
     - main.go
+    - ".*\\.pb\\.go$"
+    - ".*\\.pb$"
+    - api/wire.pb.go
