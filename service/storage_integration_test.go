@@ -8,6 +8,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/golang/protobuf/ptypes" //nolint:staticcheck
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -15,7 +16,6 @@ import (
 	"github.com/mkuchenbecker/storage/api"
 	testing_model "github.com/mkuchenbecker/storage/testing/model"
 	"google.golang.org/grpc"
-	"google.golang.org/protobuf/types/known/anypb"
 )
 
 const port = 50060
@@ -39,7 +39,7 @@ func TestService(t *testing.T) {
 
 	key := api.Key{Value: "qux"}
 	originalFoo := &testing_model.Foo{Bar: "baz"}
-	any, err := anypb.New(originalFoo)
+	any, err := ptypes.MarshalAny(originalFoo) //nolint:staticcheck
 	require.NoError(t, err)
 
 	_, err = client.Put(
@@ -57,11 +57,8 @@ func TestService(t *testing.T) {
 	)
 	require.NoError(t, err)
 
-	fooAny, err := anypb.New(response.Value)
-	require.NoError(t, err)
-	foo := new(testing_model.Foo)
-	err = fooAny.UnmarshalTo(foo)
-	require.NoError(t, err)
+	foo := &testing_model.Foo{}
+	require.NoError(t, ptypes.UnmarshalAny(response.Value, foo)) //nolint:staticcheck
 	assert.Equal(t, originalFoo.Bar, foo.Bar)
 }
 
