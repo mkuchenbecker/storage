@@ -8,4 +8,4 @@ The primay purpose of this service is the ability to quickly spin up a container
 To get started:
 `make init`
 
-Proto output should be generated but not checked in. 
+Proto output should be generated but not checked in but are currently doing so for simplicity.
