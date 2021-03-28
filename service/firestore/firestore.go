@@ -2,8 +2,8 @@ package firestore
 
 import (
 	"context"
-	"errors"
 	"fmt"
+	"pkg/errors"
 
 	"github.com/golang/protobuf/ptypes/any"
 	"github.com/mkuchenbecker/storage/service"
