@@ -21,7 +21,7 @@ import (
 const port = 50060
 
 func TestService(t *testing.T) {
-	service := New()
+	service := New(NewMapBackend())
 	go func() {
 		err := StartService(service, port)
 		require.NoError(t, err)
@@ -63,7 +63,7 @@ func TestService(t *testing.T) {
 }
 
 func TestService_Listen_Failure(t *testing.T) {
-	err := StartService(New(), -1)
+	err := StartService(New(NewMapBackend()), -1)
 	require.Error(t, err)
 	assert.Equal(t,
 		"listen tcp: address -1: invalid port",

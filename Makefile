@@ -15,6 +15,10 @@ generate:
 	--go_opt=paths=source_relative \
     --descriptor_set_out=./api/wire_descriptor.pb \
 	wire.proto  
+	protoc --proto_path=./service/datamodel \
+	--go_out=plugins=grpc:./service/datamodel \
+	--go_opt=paths=source_relative \
+	datamodel.proto  
 
 .PHONY: integration
 integration:
