@@ -23,6 +23,10 @@ generate:
 	--go_out=plugins=grpc:./testing/model \
 	--go_opt=paths=source_relative \
 	foo.proto
+	protoc --proto_path=universe/vector/ \
+	--go_out=plugins=grpc:./universe/vector/ \
+	--go_opt=paths=source_relative \
+	vector.proto  
 
 .PHONY: init
 init: generate build
