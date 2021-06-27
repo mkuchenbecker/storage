@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/mkuchenbecker/storage/universe/object"
-	"github.com/mkuchenbecker/storage/universe/vector"
 )
 
 type State interface {
@@ -30,7 +29,7 @@ type globalstate struct {
 	squareMagnitudeIndex map[float64]object.Object
 }
 
-func (s *globalstate) Detect(timestamp time.Time, position vector.Vector) []object.Object {
+// func (s *globalstate) Detect(timestamp time.Time, position vector.Vector) []object.Object {
 
-	return make([]object.Object, 0)
-}
+// 	return make([]object.Object, 0)
+// }
